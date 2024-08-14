@@ -1,0 +1,180 @@
+/**
+ * SnapToast CSS - Styles for the SnapToast JavaScript Plugin
+ *
+ * This CSS file defines the styling for the SnapToast notifications, 
+ * including positioning, appearance, transitions, and state changes.
+ * 
+ * The styles are customizable based on the 'mode' of the toast and 
+ * are responsive to user interactions such as hover and click.
+ * 
+ * Documentation:
+ * 
+ * - .snap-toast-container: Defines the container for toast notifications.
+ * - .snap-toast-notification: Base style for the toast notification.
+ * - .snap-toast-header: Styles the header section of the toast, if a title is provided.
+ * - .snap-toast-body: Styles the body section where the main message is displayed.
+ * - .snap-toast-close: Styles the close button ('X') in the toast.
+ * - .snap-toast-info, .snap-toast-warning, .snap-toast-danger, .snap-toast-success: 
+ *   Specific styles for different types of toasts.
+ * - .show: Class added when the toast is displayed to trigger transitions.
+ * - .paused: Class added when the toast is paused by user interaction (hover or click).
+ * - .expanded: Class added to the body when the "Read more" functionality is triggered.
+ */
+
+/* Base container styles for different positions */
+.snap-toast-container {
+    position: fixed;
+    z-index: 9999;
+    width: 350px; /* Fixed width for all toasts */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.snap-toast-container.top-left {
+    top: 20px;
+    left: 20px;
+}
+
+.snap-toast-container.top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.snap-toast-container.center-top {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.snap-toast-container.bottom-left {
+    bottom: 20px;
+    left: 20px;
+    flex-direction: column-reverse;
+}
+
+.snap-toast-container.bottom-right {
+    bottom: 20px;
+    right: 20px;
+    flex-direction: column-reverse;
+}
+
+.snap-toast-container.center-bottom {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column-reverse;
+}
+
+/* Base toast notification styles */
+.snap-toast-notification {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease, max-height 0.3s ease, box-shadow 0.2s ease;
+    max-height: 120px; /* Initial maximum height */
+    min-height: 80px; /* Minimum height for all toasts */
+    cursor: pointer;
+}
+
+/* Class added when the toast is shown, triggers the transition */
+.snap-toast-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover, focus, and click styles for active or paused toasts */
+.snap-toast-notification:hover,
+.snap-toast-notification:focus-within,
+.snap-toast-notification:active,
+.snap-toast-notification.paused {
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.25); /* Blue shadow around the toast */
+    border-color: rgba(13, 110, 253, 0.5); /* Border color when active or paused */
+}
+
+/* Toast header styles */
+.snap-toast-header {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    position: relative;
+}
+
+/* Icon style in the header indicating the type of toast */
+.snap-toast-header-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+/* Title text style in the header */
+.snap-toast-header-title {
+    flex-grow: 1;
+    font-weight: 500;
+    font-size: 14px;
+    color: #343a40;
+}
+
+/* Close button ('X') style */
+.snap-toast-close {
+    background: none;
+    border: none;
+    color: #dc3545; /* Red color for the close button */
+    font-size: 12px;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+/* Body text style */
+.snap-toast-body {
+    padding: 16px;
+    font-size: 14px;
+    color: #343a40;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+}
+
+/* Expanded state for "Read More" functionality */
+.snap-toast-body.expanded {
+    white-space: normal;
+    max-height: none;
+}
+
+/* Style for the "Read More" link */
+.snap-toast-read-more {
+    color: #0d6efd;
+    cursor: pointer;
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+/* Specific styles for different types of toasts */
+.snap-toast-info .snap-toast-header-icon {
+    background-color: #0dcaf0;
+}
+
+.snap-toast-warning .snap-toast-header-icon {
+    background-color: #ffc107;
+}
+
+.snap-toast-danger .snap-toast-header-icon {
+    background-color: #dc3545;
+}
+
+.snap-toast-success .snap-toast-header-icon {
+    background-color: #198754;
+}
