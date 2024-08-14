@@ -10,46 +10,31 @@
  * Plugin Configuration:
  * 
  * - maxVisibleToasts (number): Limits the number of toasts visible at the same time. Default is 3.
+ * - readMoreText (string): Text displayed for the "Read more" link. Default is 'Read more'.
+ * - readLessText (string): Text displayed for the "Read less" link. Default is 'Read less'.
  * 
  * Usage:
  * 
  * 1. Configure the plugin (optional):
  * 
  * SnapToast.configure({
- *     maxVisibleToasts: 5 // Set the maximum number of visible toasts
+ *     maxVisibleToasts: 5,       // Set the maximum number of visible toasts
+ *     readMoreText: 'Leer más',  // Customize "Read more" text for multi-language support
+ *     readLessText: 'Leer menos' // Customize "Read less" text for multi-language support
  * });
  * 
  * 2. Create a toast notification:
  * 
  * new SnapToast('This is a message', 'Title', 'info', 'top-right', 5000);
  * 
- * 3. Available modes for toast:
- * 
- * - 'info': Displays an informational message.
- * - 'warning': Displays a warning message.
- * - 'danger': Displays an error or danger message.
- * - 'success': Displays a success message.
- * 
- * 4. Available positions for toast:
- * 
- * - 'top-right': Toast appears in the top-right corner of the screen.
- * - 'top-left': Toast appears in the top-left corner of the screen.
- * - 'bottom-right': Toast appears in the bottom-right corner of the screen.
- * - 'bottom-left': Toast appears in the bottom-left corner of the screen.
- * - 'center-top': Toast appears at the center of the screen at the top.
- * - 'center-bottom': Toast appears at the center of the screen at the bottom.
- * 
- * 5. Advanced Features:
- * 
- * - Hover/Click Pause: The toast's countdown pauses when the user hovers over or clicks on the toast, preventing it from closing automatically during interaction.
- * - Read More: For long messages, a "Read more" link is displayed, allowing the user to expand the toast and view the full message. The toast remains visible until the user interacts with it.
- * 
  * Example usage:
  * 
  * <script>
  *     // Optional configuration
  *     SnapToast.configure({
- *         maxVisibleToasts: 5 // Allow up to 5 toasts to be visible at once
+ *         maxVisibleToasts: 5,
+ *         readMoreText: 'Ver más',
+ *         readLessText: 'Ver menos'
  *     });
  * 
  *     // Create toasts
@@ -61,7 +46,9 @@
 
 class SnapToast {
     static settings = {
-        maxVisibleToasts: 3, // Default maximum number of visible toasts
+        maxVisibleToasts: 3,       // Default maximum number of visible toasts
+        readMoreText: 'Read more', // Default "Read more" text
+        readLessText: 'Read less'  // Default "Read less" text
     };
     static toastQueue = []; // Queue for pending toasts
 
@@ -153,16 +140,16 @@ class SnapToast {
         if (this.message.length > 100) { 
             const readMore = document.createElement('span');
             readMore.className = 'snap-toast-read-more';
-            readMore.innerText = 'Read more';
+            readMore.innerText = SnapToast.settings.readMoreText;
             readMore.addEventListener('click', (e) => {
                 e.stopPropagation(); // Prevent the click on "Read more" from closing the toast
                 bodyDiv.classList.toggle('expanded');
                 if (bodyDiv.classList.contains('expanded')) {
                     toast.style.maxHeight = `${bodyDiv.scrollHeight + 60}px`; // Adjust the toast height
-                    readMore.innerText = 'Read less';
+                    readMore.innerText = SnapToast.settings.readLessText;
                 } else {
                     toast.style.maxHeight = '120px'; // Return to original height
-                    readMore.innerText = 'Read more';
+                    readMore.innerText = SnapToast.settings.readMoreText;
                 }
                 // Mark the toast as paused when "Read more" is clicked
                 this.isPaused = true;
